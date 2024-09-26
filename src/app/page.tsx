@@ -2,6 +2,8 @@
 
 import { cn } from "@/utils";
 import React, { useState } from "react";
+import Image from "next/image";
+import { AlignTextIcon, BigCursorIcon, ContrastIcon, DyslexiaIcon, HideImagesIcon, HighlightLinksIcon, LineHeightIcon, PageStructureIcon, PauseAnimationsIcon, ReadingFocusIcon, ReadingGuideIcon, ScreenReaderIcon, TextSizeIcon, TextSpacingIcon } from "@/components/icons";
 
 const getActionHandler = (actionName: string) => function actionHandler() {
   console.log('Sending action:', actionName);
@@ -174,20 +176,20 @@ export default function Home() {
           { title: "1", name: "set-contrast-1" },
           { title: "2", name: "set-contrast-2" },
           { title: "3", name: "set-contrast-3" }
-        ]} icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Screen Reader" actionName="talkify-speak" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Highlight Links" actionName="highlight-links" icon={IconPlaceholder} />
-        <PlusMinusWidgetToggle title="Font Size" actionNames={{ minus: "decrease-font-size", plus: "increase-font-size" }} icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Dyslexia Friendly" actionName="toggle-dyslexia-font" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Align Text" actionName="toggle-text-alignment" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Line Height" actionName="toggle-line-height" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Text Spacing" actionName="toggle-text-spacing" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Pause Animations" actionName="toggle-animation-play-state" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Hide Images" actionName="toggle-images-hidden" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Page Structure" actionName="toggle-page-structure" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Reading Guide" actionName="toggle-reading-guide" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Reading Focus" actionName="toggle-reading-focus" icon={IconPlaceholder} />
-        <SimpleWidgetToggle title="Big Cursor" actionName="toggle-big-cursor" icon={IconPlaceholder} />
+        ]} icon={ContrastIcon} />
+        <SimpleWidgetToggle title="Screen Reader" actionName="talkify-speak" icon={ScreenReaderIcon} />
+        <SimpleWidgetToggle title="Highlight Links" actionName="highlight-links" icon={HighlightLinksIcon} />
+        <PlusMinusWidgetToggle title="Font Size" actionNames={{ minus: "decrease-font-size", plus: "increase-font-size" }} icon={TextSizeIcon} />
+        <SimpleWidgetToggle title="Dyslexia Friendly" actionName="toggle-dyslexia-font" icon={DyslexiaIcon} />
+        <SimpleWidgetToggle title="Align Text" actionName="toggle-text-alignment" icon={AlignTextIcon} />
+        <SimpleWidgetToggle title="Line Height" actionName="toggle-line-height" icon={LineHeightIcon} />
+        <SimpleWidgetToggle title="Text Spacing" actionName="toggle-text-spacing" icon={TextSpacingIcon} />
+        <SimpleWidgetToggle title="Pause Animations" actionName="toggle-animation-play-state" icon={PauseAnimationsIcon} />
+        <SimpleWidgetToggle title="Hide Images" actionName="toggle-images-hidden" icon={HideImagesIcon} />
+        <SimpleWidgetToggle title="Page Structure" actionName="toggle-page-structure" icon={PageStructureIcon} />
+        <SimpleWidgetToggle title="Reading Guide" actionName="toggle-reading-guide" icon={ReadingGuideIcon} />
+        <SimpleWidgetToggle title="Reading Focus" actionName="toggle-reading-focus" icon={ReadingFocusIcon} />
+        <SimpleWidgetToggle title="Big Cursor" actionName="toggle-big-cursor" icon={BigCursorIcon} />
       </div>
 
       <button className="w-full bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg p-3 text-primary-foreground font-bold">

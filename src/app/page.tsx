@@ -1,101 +1,198 @@
-import Image from "next/image";
+'use client';
+
+import { cn } from "@/utils";
+import React, { useState } from "react";
+
+const getActionHandler = (actionName: string) => function actionHandler() {
+  console.log('Sending action:', actionName);
+  window.parent.postMessage(JSON.stringify({
+    action: actionName
+  }), '*');
+}
+
+type WidgetToggleContainerProps = {
+  children: React.ReactNode;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+function WidgetToggleContainer({ children, className, ...props }: WidgetToggleContainerProps) {
+  return (
+    <div className={cn("w-full h-full bg-background-secondary rounded-lg p-2", className)} {...props}>
+      {children}
+    </div>
+  );
+}
+
+type SimpleWidgetToggleProps = {
+  title: string;
+  icon: React.FC;
+  actionName: string;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+function SimpleWidgetToggle({ title, icon: Icon, className, actionName, ...props }: SimpleWidgetToggleProps) {
+  return (
+    <WidgetToggleContainer {...props}>
+      <button className={cn('w-full h-full flex flex-col items-center justify-center gap-y-1 text-center', className)} onClick={getActionHandler(actionName)}>
+        <Icon />
+        <p className="text-xs">{title}</p>
+      </button>
+    </WidgetToggleContainer>
+  );
+}
+
+type PlusMinusWidgetToggleProps = {
+  title: string;
+  icon: React.FC;
+  actionNames: {
+    minus: string;
+    plus: string;
+  };
+} & React.HTMLAttributes<HTMLDivElement>;
+
+function PlusMinusWidgetToggle({ title, icon: Icon, className, ...props }: PlusMinusWidgetToggleProps) {
+  return (
+    <WidgetToggleContainer className={cn('grid grid-cols-3 place-items-center gap-y-1 col-span-2', className)} {...props}>
+      <button className="bg-background-secondary border border-black size-8 flex items-center justify-center rounded-xl" onClick={getActionHandler('decrease-font-size')}>
+        -
+      </button>
+      <div className="flex flex-col items-center justify-center gap-y-1">
+        <Icon />
+        <p className="text-center text-xs">{title}</p>
+      </div>
+      <button className="bg-background-secondary border border-black size-8 flex items-center justify-center rounded-xl" onClick={getActionHandler('increase-font-size')}>
+        +
+      </button>
+    </WidgetToggleContainer>
+  );
+}
+
+type MultipleActionWidgetToggleProps = {
+  title: string;
+  icon: React.FC;
+  actions: {
+    title: string;
+    name: string;
+  }[];
+} & React.HTMLAttributes<HTMLDivElement>;
+
+function MultipleActionWidgetToggle({ title, icon: Icon, actions, className, ...props }: MultipleActionWidgetToggleProps) {
+  return (
+    <WidgetToggleContainer className={cn('flex flex-col items-center justify-between text-center col-span-2 row-span-2', className)} {...props}>
+      <div className="flex-1 flex flex-col items-center justify-center gap-y-1">
+        <Icon />
+        <p>{title}</p>
+      </div>
+
+      <div className="w-full grid grid-flow-col gap-x-2 min-h-16">
+        {actions.map(({ title, name }) => (
+          <button key={name} className="bg-background-secondary border border-black w-full h-full flex items-center justify-center rounded-xl" onClick={getActionHandler(name)}>
+            {title}
+          </button>
+        ))}
+      </div>
+    </WidgetToggleContainer>
+  );
+}
+
+function IconPlaceholder() {
+  return (
+    <div className="size-14 bg-background flex items-center justify-center">
+      X
+    </div>
+  );
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  async function onSearch() {
+    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchQuery}`);
+    const resBody = await res.json();
+
+    const meaning = resBody[0].meanings[0].definitions[0].definition;
+    setSearchResult(meaning);
+  }
+
+  return (
+    <div className="w-full h-full bg-background rounded-lg p-3 flex flex-col gap-y-3">
+      <div className="relative bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg grid grid-cols-[1fr_auto_1fr]">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-background-secondary px-6 py-2 rounded-b-full font-bold text-neutral-500 text-center">
+          <h2>Accessibility Settings</h2>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="justify-self-start p-3 col-start-1">
+          <div className="size-8 bg-background-secondary flex items-center justify-center rounded-full">
+            X
+          </div>
+        </div>
+
+        <div className="justify-self-end p-3 col-start-3">
+          <div className="size-8 bg-background-secondary flex items-center justify-center rounded-full">
+            P
+          </div>
+        </div>
+
+        <div className="w-full p-3 pt-0 col-span-full grid grid-cols-[auto_1fr_auto] mt-4">
+          <button className="bg-background w-12 flex items-center justify-center rounded-l-full" onClick={onSearch}>S</button>
+          <input type="text" className="w-full col-start-2 col-span-1 px-4 py-2" placeholder="Search the dictionary to clarify terms"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} />
+          <button className="bg-background w-12 flex items-center justify-center rounded-r-full">L</button>
+        </div>
+      </div>
+
+      {/* export const ACCEPTED_ACTION_NAMES = [
+	'increase-font-size',
+	'decrease-font-size',
+	'highlight-links',
+	'toggle-line-height',
+	'toggle-text-spacing',
+	'toggle-text-alignment',
+	'toggle-dyslexia-font',
+	'toggle-big-cursor',
+	'toggle-reading-focus',
+	'toggle-reading-guide',
+	'toggle-animation-play-state',
+	'set-contrast-1',
+	'set-contrast-2',
+	'set-contrast-3',
+	'toggle-page-structure',
+	'toggle-images-hidden',
+	'talkify-speak'
+] as const; */}
+      {
+        searchResult && (
+          <div>
+            <h1 className="font-bold">{searchQuery}</h1>
+            <p>{searchResult}</p>
+          </div>
+        )
+      }
+
+      <div className="grid grid-cols-3 gap-3 auto-rows-[theme(spacing.24)]">
+        <MultipleActionWidgetToggle title="Contrast" actions={[
+          { title: "1", name: "set-contrast-1" },
+          { title: "2", name: "set-contrast-2" },
+          { title: "3", name: "set-contrast-3" }
+        ]} icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Screen Reader" actionName="talkify-speak" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Highlight Links" actionName="highlight-links" icon={IconPlaceholder} />
+        <PlusMinusWidgetToggle title="Font Size" actionNames={{ minus: "decrease-font-size", plus: "increase-font-size" }} icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Dyslexia Friendly" actionName="toggle-dyslexia-font" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Align Text" actionName="toggle-text-alignment" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Line Height" actionName="toggle-line-height" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Text Spacing" actionName="toggle-text-spacing" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Pause Animations" actionName="toggle-animation-play-state" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Hide Images" actionName="toggle-images-hidden" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Page Structure" actionName="toggle-page-structure" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Reading Guide" actionName="toggle-reading-guide" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Reading Focus" actionName="toggle-reading-focus" icon={IconPlaceholder} />
+        <SimpleWidgetToggle title="Big Cursor" actionName="toggle-big-cursor" icon={IconPlaceholder} />
+      </div>
+
+      <button className="w-full bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg p-3 text-primary-foreground font-bold">
+        Reset to Default Settings
+      </button>
     </div>
   );
 }

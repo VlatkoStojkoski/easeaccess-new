@@ -3,25 +3,58 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --tw-colors-primary: 258 69% 50%;
+  --tw-colors-primary-50: 258 70% 91%;
+  --tw-colors-primary-100: 257 69% 86%;
+  --tw-colors-primary-200: 257 69% 77%;
+  --tw-colors-primary-300: 258 68% 68%;
+  --tw-colors-primary-400: 257 68% 59%;
+  --tw-colors-primary-500: 258 69% 50%;
+  --tw-colors-primary-600: 257 69% 40%;
+  --tw-colors-primary-700: 258 69% 30%;
+  --tw-colors-primary-800: 258 69% 20%;
+  --tw-colors-primary-900: 258 69% 10%;
+  --tw-colors-primary-950: 257 69% 5%;
+
+  --tw-colors-primary-foreground: 0 0% 100%;
+
+  --tw-colors-secondary: 277 81% 58%;
+  --tw-colors-secondary-50: 276 81% 94%;
+  --tw-colors-secondary-100: 277 81% 90%;
+  --tw-colors-secondary-200: 278 81% 82%;
+  --tw-colors-secondary-300: 277 82% 74%;
+  --tw-colors-secondary-400: 277 82% 66%;
+  --tw-colors-secondary-500: 277 81% 58%;
+  --tw-colors-secondary-600: 277 82% 47%;
+  --tw-colors-secondary-700: 277 81% 36%;
+  --tw-colors-secondary-800: 277 81% 25%;
+  --tw-colors-secondary-900: 277 80% 14%;
+  --tw-colors-secondary-950: 278 81% 8%;
+
+  --tw-colors-secondary-foreground: 0 0% 100%;
+
+  --tw-colors-background: 0 0% 100%;
+  --tw-colors-foreground: 0 0% 0%;
+  --tw-colors-border: 0 0% 60%;
+  --tw-border-radius: 0.8rem;
+
+  --tw-colors-background: 0 0% 90%;
+  --tw-colors-background-secondary: 0 0% 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: hsl(var(--tw-colors-border));
+    /* @apply border-border; */
+  }
+
+  body {
+    color: hsl(var(--tw-colors-foreground));
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer components {
+  .link-inline {
+    @apply text-blue-600 underline hover:no-underline;
   }
 }

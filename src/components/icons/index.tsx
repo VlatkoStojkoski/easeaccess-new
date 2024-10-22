@@ -1,27 +1,5 @@
 import Image from "next/image";
 
-/*
-All icons:
-🎲 > ll ../new/ease-access-ui/public/assets/img/
-total 80
-drwxrwxr-x 2 vlatko vlatko  4096 сеп 26 13:56 .
-drwxrwxr-x 3 vlatko vlatko  4096 авг 13 11:56 ..
--rw-rw-r-- 1 vlatko vlatko  1323 сеп 26 13:53 align-text.png
--rw-rw-r-- 1 vlatko vlatko  3954 сеп 26 13:52 contrast.png
--rw-rw-r-- 1 vlatko vlatko 13349 авг 13 11:57 cursor.png
--rw-rw-r-- 1 vlatko vlatko  3722 сеп 26 13:53 dyslexia.png
--rw-rw-r-- 1 vlatko vlatko  3158 сеп 26 13:53 hide-images.png
--rw-rw-r-- 1 vlatko vlatko  1846 сеп 26 13:53 line-height.png
--rw-rw-r-- 1 vlatko vlatko  2709 сеп 26 13:53 links.png
--rw-rw-r-- 1 vlatko vlatko  3835 сеп 26 13:54 page-structure.png
--rw-rw-r-- 1 vlatko vlatko  1949 сеп 26 13:53 pause-animations.png
--rw-rw-r-- 1 vlatko vlatko  4947 сеп 26 13:54 reading-focus.png
--rw-rw-r-- 1 vlatko vlatko  3255 сеп 26 13:54 reading-guide.png
--rw-rw-r-- 1 vlatko vlatko  1128 сеп 26 13:53 screen-reader.png
--rw-rw-r-- 1 vlatko vlatko  2117 сеп 26 13:53 text-size.png
--rw-rw-r-- 1 vlatko vlatko  2216 сеп 26 13:53 text-spacing.png
-*/
-
 export function ContrastIcon() {
 	return (
 		<>

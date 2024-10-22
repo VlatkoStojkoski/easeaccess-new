@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Widget } from "./widget";
 
 export const metadata: Metadata = {
   title: "EaseAccess 24 Accessibility Widget",
@@ -14,8 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased`}
+        className={`antialiased h-screen w-screen`}
       >
+        <Widget />
         {children}
       </body>
     </html>

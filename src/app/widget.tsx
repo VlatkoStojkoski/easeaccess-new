@@ -32,7 +32,7 @@ type WidgetLinkProps = {
   icon: React.FC;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-function WidgetLink({ title, href, className, icon: Icon, ...props }: WidgetLinkProps) {
+function WidgetLink({ title, href, className, ...props }: WidgetLinkProps) {
   return (
     <WidgetToggleContainer className="bg-neutral-100" {...props}>
       <Link className={

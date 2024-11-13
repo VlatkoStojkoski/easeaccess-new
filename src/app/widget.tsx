@@ -291,7 +291,7 @@ export function Widget() {
           <button className="bg-background w-12 flex items-center justify-center rounded-l-full" onClick={onSearch}>
             <Image src="https://cdn3.iconfinder.com/data/icons/feather-5/24/search-512.png" width={20} height={20} alt="Search" />
           </button>
-          <input type="text" className="w-full col-start-2 col-span-1 px-4 py-2" placeholder="Search the dictionary to clarify terms"
+          <input type="text" className="w-full col-start-2 col-span-1 px-4 py-2 rounded-none" placeholder="Search the dictionary to clarify terms"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} />
           <button className="bg-background w-12 flex items-center justify-center rounded-r-full">

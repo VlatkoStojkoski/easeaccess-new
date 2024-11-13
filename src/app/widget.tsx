@@ -127,17 +127,17 @@ type PlusMinusWidgetToggleProps = {
   };
 } & React.HTMLAttributes<HTMLDivElement>;
 
-function PlusMinusWidgetToggle({ title, icon: Icon, className, ...props }: PlusMinusWidgetToggleProps) {
+function PlusMinusWidgetToggle({ title, icon: Icon, className, actionNames, ...props }: PlusMinusWidgetToggleProps) {
   return (
     <WidgetToggleContainer className={cn('grid grid-cols-3 place-items-center gap-y-1 col-span-2', className)} {...props}>
-      <button className="bg-background-secondary border border-black size-8 flex items-center justify-center rounded-xl" onClick={getActionHandler('decrease-font-size')}>
+      <button className="bg-background-secondary border border-black size-8 flex items-center justify-center rounded-xl" onClick={getActionHandler(actionNames.minus)}>
         -
       </button>
       <div className="flex flex-col items-center justify-center gap-y-1">
         <Icon />
         <p className="text-center text-xs">{title}</p>
       </div>
-      <button className="bg-background-secondary border border-black size-8 flex items-center justify-center rounded-xl" onClick={getActionHandler('increase-font-size')}>
+      <button className="bg-background-secondary border border-black size-8 flex items-center justify-center rounded-xl" onClick={getActionHandler(actionNames.plus)}>
         +
       </button>
     </WidgetToggleContainer>
@@ -269,7 +269,7 @@ export function Widget() {
   }
 
   return (
-    <div className="w-full h-full bg-background rounded-lg p-3 flex flex-col justify-between gap-y-3">
+    <div className="w-full h-screen max-h-full bg-background rounded-lg p-3 flex flex-col justify-between gap-y-3">
       <div className="relative bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg grid grid-cols-[1fr_auto_1fr]">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-background-secondary px-6 py-2 rounded-b-full font-bold text-neutral-500 text-center">
           <h2>Accessibility Settings</h2>
@@ -310,7 +310,7 @@ export function Widget() {
         )
       }
 
-      <div className="grid grid-cols-3 gap-3 auto-rows-[theme(spacing.28)]">
+      <div className="flex-shrink h-full overflow-scroll grid grid-cols-3 gap-3 auto-rows-[theme(spacing.28)]">
         <MultipleActionWidgetToggle title="Contrast" actions={[
           { title: "1", name: "set-contrast-1" },
           { title: "2", name: "set-contrast-2" },
@@ -338,7 +338,9 @@ export function Widget() {
           { title: "2", name: "set-text-spacing-2" },
           { title: "3", name: "set-text-spacing-3" }
         ]} defaultActionName="set-text-spacing-default" icon={TextSpacingIcon} />
-        <SimpleWidgetToggle title="Pause Animations" actionName="toggle-animation-play-state" icon={PauseAnimationsIcon} />
+        <SimpleWidgetToggle title="Pause Animations" actionNames={{
+          default: "set-animations-off", active: "set-animations-on"
+        }} icon={PauseAnimationsIcon} />
         <SimpleWidgetToggle title="Hide Images" actionName="toggle-images-hidden" icon={HideImagesIcon} />
         <WidgetButton title="Page Structure" actionName="toggle-page-structure" icon={PageStructureIcon} />
         <SimpleWidgetToggle title="Reading Guide" actionName="toggle-reading-guide" icon={ReadingGuideIcon} />
@@ -356,6 +358,18 @@ export function Widget() {
         </button>
       </div>
 
+      <div className="flex flex-row items-center justify-between bg-white rounded-lg px-2 py-3">
+        <div className="flex flex-row gap-x-1">
+          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit p-2">User statement</p>
+          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit p-2">Report problem</p>
+          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit p-2">Our policy</p>
+        </div>
+
+        <div className="flex flex-col items-center justify-center h-fit">
+          <p className="mb-0">Web Accessible by</p>
+          <p className="font-bold text-primary-500">EaseAccess24</p>
+        </div>
+      </div>
     </div>
   );
 }

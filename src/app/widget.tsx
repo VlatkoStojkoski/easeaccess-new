@@ -271,12 +271,12 @@ export function Widget() {
   return (
     <div className="w-full h-screen max-h-full bg-background rounded-lg p-3 flex flex-col justify-between gap-y-3">
       <div className="relative bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg grid grid-cols-[1fr_auto_1fr]">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-background-secondary px-6 py-2 rounded-b-full font-bold text-neutral-500 text-center">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-background-secondary w-64 px-6 py-3 pb-4 rounded-b-full font-bold text-neutral-500 text-center">
           <h2>Accessibility Settings</h2>
         </div>
 
         <div className="justify-self-start p-3 col-start-1">
-          <div className="size-8 bg-background-secondary flex items-center justify-center rounded-full">
+          <div className="size-8 cursor-pointer bg-neutral-200 hover:bg-neutral-300 transition-colors  flex items-center justify-center rounded-full" onClick={getActionHandler('toggle-widget-open')}>
             X
           </div>
         </div>
@@ -348,25 +348,19 @@ export function Widget() {
         <SimpleWidgetToggle title="Big Cursor" actionName="toggle-big-cursor" icon={BigCursorIcon} />
       </div>
 
-      <div className="grid grid-cols-[1fr_auto] gap-x-4">
-        <button className="w-full bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg p-3 text-primary-foreground font-bold" onClick={getActionHandler('reload')}>
-          Reset to Default Settings
-        </button>
+      <button className="w-full bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg p-3 text-primary-foreground font-bold" onClick={getActionHandler('reload')}>
+        Reset to Default Settings
+      </button>
 
-        <button className="size-16 bg-red-500 rounded-full p-3 text-primary-foreground font-bold" onClick={getActionHandler('toggle-widget-open')}>
-          X
-        </button>
-      </div>
-
-      <div className="flex flex-row items-center justify-between bg-white rounded-lg px-2 py-3">
+      <div className="flex flex-col items-center gap-1 justify-between bg-white rounded-lg p-1.5 sm:px-2 sm:py-3 text-center">
         <div className="flex flex-row gap-x-1">
-          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit p-2">User statement</p>
-          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit p-2">Report problem</p>
-          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit p-2">Our policy</p>
+          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit px-2 py-1.5">User statement</p>
+          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit px-2 py-1.5">Report problem</p>
+          <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit px-2 py-1.5">Our policy</p>
         </div>
 
-        <div className="flex flex-col items-center justify-center h-fit">
-          <p className="mb-0">Web Accessible by</p>
+        <div className="flex flex-row gap-x-2 sm:gap-0 sm:flex-col items-center justify-center h-fit">
+          <p className="mb-0 text-xs">Web Accessible by</p>
           <p className="font-bold text-primary-500">EaseAccess24</p>
         </div>
       </div>

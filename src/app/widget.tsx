@@ -359,7 +359,7 @@ export function Widget() {
           <p className="text-[0.7rem] bg-neutral-200 rounded-lg flex items-center justify-center h-fit px-2 py-1.5">Our policy</p>
         </div>
 
-        <div className="flex flex-row gap-x-2 sm:gap-0 sm:flex-col items-center justify-center h-fit">
+        <div className="flex flex-col gap-x-2 sm:gap-0 sm:flex-col items-center justify-center h-fit">
           <p className="mb-0 text-xs">Web Accessible by</p>
           <p className="font-bold text-primary-500">EaseAccess24</p>
         </div>
